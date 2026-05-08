@@ -134,15 +134,20 @@ def move():
         if valid(point + course):
             point.move(course)
         else:
-            options = [
-                vector(8, 0),
-                vector(-8, 0),
-                vector(0, 8),
-                vector(0, -8),
-            ]
-            plan = choice(options)
-            course.x = plan.x
-            course.y = plan.y
+        # Vector hacia Pacman
+            if pacman.x > point.x:
+                plan = vector(5, 0)
+            elif pacman.x < point.x:
+                plan = vector(-5, 0)
+            elif pacman.y > point.y:
+                plan = vector(0, 5)
+            else:
+                plan = vector(0, -5)
+
+    # Solo cambiar dirección si es válida
+            if valid(point + plan):
+                course.x = plan.x
+                course.y = plan.y
 
         up()
         goto(point.x + 10, point.y + 10)
